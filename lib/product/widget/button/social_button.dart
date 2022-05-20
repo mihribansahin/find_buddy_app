@@ -26,6 +26,7 @@ class SocialButton extends StatelessWidget {
         ],
       ),
       child: IconButton(
+        splashColor: Colors.transparent,
         onPressed: () => onPressed,
         color: Colors.orange,
         padding: EdgeInsets.all(10.0),

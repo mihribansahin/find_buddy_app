@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_buddy_app/feature/login/view_model/login_view_model.dart';
 import 'package:flutter_buddy_app/product/ui_helper/ui_helper.dart';
 import 'package:flutter_buddy_app/product/utils/form_validator.dart';
 import 'package:flutter_buddy_app/product/widget/appbar/login_register_appbar.dart';
 import 'package:flutter_buddy_app/product/widget/button/social_button.dart';
 import 'package:flutter_buddy_app/product/widget/text_field.dart/custom_text_field.dart';
+import 'package:provider/provider.dart';
 import '../../../product/widget/button/custom_button.dart';
 
 class LoginView extends StatefulWidget {
@@ -19,47 +21,51 @@ class _LoginViewState extends State<LoginView> {
   String? _mailAdress = "", _password = "";
 
   bool? _passwordVisible;
+  final LoginViewModel _loginViewModel = LoginViewModel();
 
   @override
   void initState() {
     _passwordVisible = false;
-
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      top: true,
-      bottom: true,
-      child: Scaffold(
-        appBar: LoginRegisterAppBar(appBarTitle: UiHelper.login),
-        body: SingleChildScrollView(
-            child: Padding(
-          padding: const EdgeInsets.all(30),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(
-                height: 20,
-              ),
-              const Text(
-                UiHelper.loginSubtitle,
-                style: TextStyle(
-                  color: Colors.grey,
+    return ChangeNotifierProvider.value(
+      value: _loginViewModel,
+
+      child: SafeArea(
+        top: true,
+        bottom: true,
+        child: Scaffold(
+          appBar: LoginRegisterAppBar(appBarTitle: UiHelper.login),
+          body: SingleChildScrollView(
+              child: Padding(
+            padding: const EdgeInsets.all(30),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(
+                  height: 20,
                 ),
-                textAlign: TextAlign.left,
-              ),
-              socialLoginButtons(),
-              const SizedBox(
-                height: 40,
-              ),
-              loginTextFields(),
-              loginButton(),
-              createAccontTextButton(context)
-            ],
-          ),
-        )),
+                const Text(
+                  UiHelper.loginSubtitle,
+                  style: TextStyle(
+                    color: Colors.grey,
+                  ),
+                  textAlign: TextAlign.left,
+                ),
+                socialLoginButtons(),
+                const SizedBox(
+                  height: 40,
+                ),
+                loginTextFields(),
+                loginButton(),
+                createAccontTextButton(context)
+              ],
+            ),
+          )),
+        ),
       ),
     );
   }
@@ -97,7 +103,7 @@ class _LoginViewState extends State<LoginView> {
     return Column(
       children: [
         MyTextFieldWidget(
-          myLabel: "E-mail",
+          myLabel: UiHelper.mail,
           onSubmitted: (val) {},
           controller: emailController,
           textInputType: TextInputType.emailAddress,
@@ -107,7 +113,7 @@ class _LoginViewState extends State<LoginView> {
           title: '',
         ),
         MyTextFieldWidget(
-            myLabel: "Password",
+            myLabel: UiHelper.password,
             obscureText: !_passwordVisible!,
             onSubmitted: (val) {},
             onSaved: (value) => _password = value,

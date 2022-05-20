@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_buddy_app/feature/login/view/login_view.dart';
+import 'package:flutter_buddy_app/feature/register/view/register_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: Color.fromARGB(255, 29, 30, 31),
           primarySwatch: Colors.purple,
           fontFamily: 'Poppins'),
-      home: const LoginView(),
+      home: const RegisterView(),
     );
   }
 }
