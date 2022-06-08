@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_buddy_app/product/ui_helper/colors.dart';
 
 class SocialButton extends StatelessWidget {
   Function onPressed;
@@ -18,7 +19,7 @@ class SocialButton extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
+            color: MyColors.myBorderColor,
             spreadRadius: 2,
             blurRadius: 2,
             offset: const Offset(0, 1), // changes position of shadow

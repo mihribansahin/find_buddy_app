@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class MyColors {
+  static Color scaffoldBackground = Color.fromARGB(255, 29, 30, 31);
   static Color myBorderColor = Colors.purple;
   static Color myFocusedBorderColors = Colors.purple;
   static Color myErrorBorderColor = Colors.red;

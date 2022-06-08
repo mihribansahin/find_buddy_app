@@ -6,6 +6,7 @@ import 'package:flutter_buddy_app/product/widget/appbar/login_register_appbar.da
 import 'package:flutter_buddy_app/product/widget/button/social_button.dart';
 import 'package:flutter_buddy_app/product/widget/text_field.dart/custom_text_field.dart';
 import 'package:provider/provider.dart';
+import '../../../product/ui_helper/routes_helper.dart';
 import '../../../product/widget/button/custom_button.dart';
 
 class LoginView extends StatefulWidget {
@@ -22,7 +23,7 @@ class _LoginViewState extends State<LoginView> {
 
   bool? _passwordVisible;
   final LoginViewModel _loginViewModel = LoginViewModel();
-
+  String? currentUserMail, currentUserPassword;
   @override
   void initState() {
     _passwordVisible = false;
@@ -33,7 +34,6 @@ class _LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
       value: _loginViewModel,
-
       child: SafeArea(
         top: true,
         bottom: true,
@@ -105,6 +105,9 @@ class _LoginViewState extends State<LoginView> {
         MyTextFieldWidget(
           myLabel: UiHelper.mail,
           onSubmitted: (val) {},
+          onChanged: (val) {
+            currentUserMail = val;
+          },
           controller: emailController,
           textInputType: TextInputType.emailAddress,
           hintText: "example@email.com",
@@ -116,6 +119,9 @@ class _LoginViewState extends State<LoginView> {
             myLabel: UiHelper.password,
             obscureText: !_passwordVisible!,
             onSubmitted: (val) {},
+            onChanged: (val) {
+              currentUserPassword = val;
+            },
             onSaved: (value) => _password = value,
             controller: passwordController,
             textInputType: TextInputType.visiblePassword,
@@ -144,15 +150,8 @@ class _LoginViewState extends State<LoginView> {
   Widget createAccontTextButton(BuildContext context) {
     return InkWell(
       onTap: (() {
-        print("register");
-        /* Navigator.push(
-          context,
-          PageRouteBuilder(
-            pageBuilder: (context, animation1, animation2) => RegisterPage(),
-            transitionDuration: Duration.zero,
-            reverseTransitionDuration: Duration.zero,
-          ),
-        );*/
+        print("register clicked");
+        Navigator.of(context).pushNamed(RoutesHelper.registerPage);
       }),
       child: Container(
         alignment: Alignment.bottomCenter,
@@ -163,7 +162,7 @@ class _LoginViewState extends State<LoginView> {
             style: TextStyle(color: Colors.white, fontSize: 12),
             children: <TextSpan>[
               TextSpan(
-                  text: ' Kaydol',
+                  text: 'Kaydol',
                   style: TextStyle(
                       fontWeight: FontWeight.bold, color: Colors.white)),
             ],
@@ -179,7 +178,10 @@ class _LoginViewState extends State<LoginView> {
       buttonText: UiHelper.login,
       onTapFunc: () {
         //   Future.delayed()
+
         print("login");
+        print(
+            "Currend logged user INFO : current email : $currentUserMail, current password : $currentUserPassword ");
       },
     ));
   }

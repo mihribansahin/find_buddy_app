@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_buddy_app/feature/register/view_model/register_view_model.dart';
 import 'package:provider/provider.dart';
 
+import '../../../product/ui_helper/routes_helper.dart';
 import '../../../product/ui_helper/ui_helper.dart';
 import '../../../product/utils/form_validator.dart';
 import '../../../product/widget/appbar/login_register_appbar.dart';
@@ -25,6 +26,13 @@ class _RegisterViewState extends State<RegisterView> {
   TextEditingController phoneController = TextEditingController();
   TextEditingController cityController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  String? userName,
+      userSurname,
+      userMail,
+      userPhoneNumber,
+      userPassword,
+      userAgainPassword;
 
   TextEditingController passwordAgainController = TextEditingController();
 
@@ -64,7 +72,7 @@ class _RegisterViewState extends State<RegisterView> {
                   height: 40,
                 ),
                 registerTextFields(),
-                registerButton(),
+                registerButton(context),
                 loginTextButton(context)
               ],
             ),
@@ -109,6 +117,10 @@ class _RegisterViewState extends State<RegisterView> {
         MyTextFieldWidget(
           myLabel: UiHelper.name,
           onSubmitted: (val) {},
+          onChanged: (val) {
+            userName = val;
+            print("current user name: $userName");
+          },
           controller: nameController,
           textInputType: TextInputType.name,
           hintText: "",
@@ -118,6 +130,10 @@ class _RegisterViewState extends State<RegisterView> {
         ),
         MyTextFieldWidget(
           myLabel: UiHelper.surname,
+          onChanged: (val) {
+            userSurname = val;
+            print("current user surname: $userSurname");
+          },
           onSubmitted: (val) {},
           controller: surnameController,
           textInputType: TextInputType.text,
@@ -127,6 +143,10 @@ class _RegisterViewState extends State<RegisterView> {
         MyTextFieldWidget(
           myLabel: UiHelper.mail,
           onSubmitted: (val) {},
+          onChanged: (val) {
+            userMail = val;
+            print("current userMail: $userMail");
+          },
           controller: emailController,
           textInputType: TextInputType.emailAddress,
           hintText: "example@email.com",
@@ -138,6 +158,10 @@ class _RegisterViewState extends State<RegisterView> {
           myLabel: UiHelper.phoneNumber,
           onSubmitted: (val) {},
           controller: phoneController,
+          onChanged: (val) {
+            userPhoneNumber = val;
+            print("current user phoneNumber: $userPhoneNumber");
+          },
           inputFormatters: [maskFormatter],
           hintText: "+xx (xxx) xxx xx xx",
           obscureText: false,
@@ -146,18 +170,14 @@ class _RegisterViewState extends State<RegisterView> {
             return validatePhoneNumber(phoneController.text);
           },
         ),
-        MyTextFieldWidget(
-          myLabel: UiHelper.city,
-          obscureText: true,
-          onSubmitted: (val) {},
-          controller: cityController,
-          validator: (val) {
-            return validatePassword(passwordController.text);
-          },
-        ),
+        //TODO: Add dropdown menu for city
         MyTextFieldWidget(
           myLabel: UiHelper.password,
           obscureText: true,
+          onChanged: (val) {
+            userPassword = val;
+            print("current userPassword: $userPassword");
+          },
           onSubmitted: (val) {},
           controller: passwordController,
           textInputType: TextInputType.visiblePassword,
@@ -168,6 +188,10 @@ class _RegisterViewState extends State<RegisterView> {
         MyTextFieldWidget(
             myLabel: UiHelper.passwordAgain,
             obscureText: true,
+            onChanged: (val) {
+              userAgainPassword = val;
+              print("current AgainUserPassword: $userAgainPassword");
+            },
             onSubmitted: (val) {},
             controller: passwordAgainController,
             textInputType: TextInputType.visiblePassword,
@@ -183,6 +207,7 @@ class _RegisterViewState extends State<RegisterView> {
     return InkWell(
       onTap: (() {
         print("register");
+
         /* Navigator.push(
           context,
           PageRouteBuilder(
@@ -211,13 +236,17 @@ class _RegisterViewState extends State<RegisterView> {
     );
   }
 
-  Center registerButton() {
+  Center registerButton(BuildContext context) {
     return Center(
         child: MyButton(
       buttonText: UiHelper.signUp,
       onTapFunc: () {
         //   Future.delayed()
-        print("register ");
+        print("register button clicked.");
+
+        print(
+            "CURRENT USER INFO: username: $userName, userSurname: $userSurname, userMail:$userMail , userPhone: $userPhoneNumber, userPassword: $userPassword, againUserPassword: $userAgainPassword");
+        Navigator.of(context).pushNamed(RoutesHelper.loginPage);
       },
     ));
   }
